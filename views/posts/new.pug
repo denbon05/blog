@@ -1,0 +1,18 @@
+extends ../layouts/app.pug
+
+block content
+  form(action='/posts' method='post')
+    .form-group
+      label(for='title') Title
+        sup *
+      input#title.form-control(type='text' name='title' value=form.title)
+      if errors.title
+        p.text-danger= errors.title
+    .form-group
+      label(for='description') Body
+        sup *
+      textarea#description.form-control(rows='10' name='body')= form.body
+      if errors.body
+        p.text-danger= errors.body
+    input.btn.btn-primary(type='submit' value='Save')
+    a.btn.btn-warning.ml-3(href="/") Cancel
