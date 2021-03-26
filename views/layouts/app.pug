@@ -4,5 +4,13 @@ html
     title ToDo
     link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
   body
+    nav.navbar.navbar-expand.navbar-light.bg-light
+      a.navbar-brand(href="/") MyBlog
+      ul.navbar-nav.mr-auto
+        li.nav-item
+          a.nav-link(href="/posts/new") Write Post
+        li.nav-item
+          a.nav-link(href="/posts") My Posts
     .container
-      block content
+      .mt-1
+        block content

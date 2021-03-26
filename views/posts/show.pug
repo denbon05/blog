@@ -1,7 +1,7 @@
 extends ../layouts/app.pug
 
 block content
-  div
-    a(href='/') Main page
-  h1= title
-  p= body
+  .card(style='width: 18rem;')
+    .card-body
+      h5.card-title= post.title
+      p.card-text= post.body
