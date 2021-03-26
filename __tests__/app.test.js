@@ -4,64 +4,30 @@ import request from 'supertest';
 
 import runServer from '../index.js';
 
-const app = runServer();
-
-// it('requests', async () => {
-//   const res = await request(app).get('/');
-//   expect(res.status).toBe(200);
-
-//   const res2 = await request(app).get('/posts');
-//   expect(res2.status).toBe(200);
-
-//   const res3 = await request(app).get('/posts/new');
-//   expect(res3.status).toBe(200);
-
-//   const res5 = await request(app)
-//     .post('/posts');
-//   expect(res5.status).toBe(422);
-
-//   const res6 = await request(app)
-//     .post('/posts')
-//     .type('form')
-//     .send({ title: 'post title', body: 'post body' });
-//   expect(res6.status).toBe(302);
-
-//   const res7 = await request(app).get(res6.headers.location);
-//   expect(res7.status).toBe(200);
-// });
-
 describe('requests', () => {
   it('GET /', async () => {
-    const res = await request(app).get('/');
+    let res = await request(runServer()).get('/');
     expect(res.status).toBe(200);
-  });
-
-  it('GET /posts', async () => {
-    const res = await request(app).get('/posts');
+    res = await request(runServer()).get('/posts');
     expect(res.status).toBe(200);
-  });
-
-  it('GET /posts/new', async () => {
-    const res = await request(app)
+    res = await request(runServer())
       .get('/posts/new');
     expect(res.status).toBe(200);
   });
 
   it('POST /posts', async () => {
-    const res = await request(app)
+    let res2 = await request(runServer())
       .post('/posts')
       .type('form')
       .send({ title: 'post title', body: 'post body' });
-    expect(res.status).toBe(302);
-  });
-
-  it('POST /posts (errors)', async () => {
-    const res = await request(app)
+    expect(res2.status).toBe(302);
+    res2 = await request(runServer())
       .post('/posts');
-    expect(res.status).toBe(422);
+    expect(res2.status).toBe(422);
   });
 
   it('GET posts/:id/edit', async () => {
+    const app = runServer();
     const res1 = await request(app)
       .post('/posts')
       .type('form')
@@ -74,6 +40,7 @@ describe('requests', () => {
   });
 
   it('PATCH posts/:id', async () => {
+    const app = runServer();
     const res1 = await request(app)
       .post('/posts')
       .type('form')
@@ -87,6 +54,7 @@ describe('requests', () => {
   });
 
   it('PATCH posts/:id (unproccessable entity)', async () => {
+    const app = runServer();
     const res1 = await request(app)
       .post('/posts')
       .type('form')
@@ -98,6 +66,7 @@ describe('requests', () => {
   });
 
   it('DELETE posts/:id', async () => {
+    const app = runServer();
     const res1 = await request(app)
       .post('/posts')
       .type('form')
