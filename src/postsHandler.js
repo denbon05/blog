@@ -2,12 +2,20 @@
 
 import Post from '../entities/Post.js';
 import NotFoundError from '../errors/NotFoundError.js';
+import AccessDeniedError from '../errors/AccessDeniedError.js';
 
 export default (app) => {
   let posts = [
     new Post('hello', 'how are you?'),
     new Post('nodejs', 'story about nodejs'),
   ];
+
+  const requiredAuth = (req, res, next) => {
+    if (res.locals.currentUser.isGuest()) {
+      return next(new AccessDeniedError());
+    }
+    next();
+  };
 
   app.get('/posts', (req, res) => {
     res.render('posts/index', { posts });
@@ -45,7 +53,7 @@ export default (app) => {
     res.render('posts/edit', { post, form: post, errors: {} });
   });
 
-  app.patch('/posts/:id', (req, res) => {
+  app.patch('/posts/:id', requiredAuth, (req, res) => {
     const { body, title } = req.body;
     const { id } = req.params;
     const post = posts.find((p) => p.id === Number(id));
@@ -62,13 +70,9 @@ export default (app) => {
     res.redirect(`/posts/${post.id}/edit`);
   });
 
-  app.delete('/posts/:id', (req, res) => {
+  app.delete('/posts/:id', requiredAuth, (req, res) => {
     const { id } = req.params;
     posts = posts.filter((p) => p.id !== Number(id));
     res.redirect('/posts');
-  });
-
-  app.use((_req, _res, next) => {
-    next(new NotFoundError());
   });
 };
