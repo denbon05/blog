@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 // @ts-check
 
-import app from '../index.js';
+import app from '../src/index.js';
 
 const port = 8080;
 

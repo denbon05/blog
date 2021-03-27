@@ -6,11 +6,20 @@ html
   body
     nav.navbar.navbar-expand.navbar-light.bg-light
       a.navbar-brand(href="/") MyBlog
-      ul.navbar-nav.mr-auto
-        li.nav-item
-          a.nav-link(href="/posts/new") Write Post
-        li.nav-item
-          a.nav-link(href="/posts") My Posts
+      if currentUser.isGuest()
+        ul.navbar-nav.ml-auto
+          li.nav-item
+            a.nav-link(href="/session/new") Sign in
+          li.nav-item
+            a.nav-link(href="/users/new") Sign up
+      else
+        ul.navbar-nav.mr-auto
+          li.nav-item
+            a.nav-link(href="/posts/new") Write Post
+          li.nav-item
+            a.nav-link(href="/posts") My Posts
+        form.form-inline.float-xs-right(action='/session?_method=DELETE' method='post')
+          button.btn.btn-link.nav-link.text-secondary(type='submit') Sign out
     .container
       .mt-1
         block content

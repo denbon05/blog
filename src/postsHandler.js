@@ -1,31 +1,13 @@
 // @ts-check
 
-import Express from 'express';
-import bodyParser from 'body-parser';
-// import debug from 'debug';
-import methodOverride from 'method-override';
+import Post from '../entities/Post.js';
+import NotFoundError from '../errors/NotFoundError.js';
 
-import Post from './entities/Post.js';
-import NotFoundError from './errors/NotFoundError.js';
-
-// const logHttp = debug('http');
-
-export default () => {
-  // @ts-ignore
-  const app = new Express();
-  app.set('view engine', 'pug');
-  // app.use(Express.static('/assets'));
-  app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(methodOverride('_method'));
-
+export default (app) => {
   let posts = [
     new Post('hello', 'how are you?'),
     new Post('nodejs', 'story about nodejs'),
   ];
-
-  app.get('/', (req, res) => {
-    res.render('index');
-  });
 
   app.get('/posts', (req, res) => {
     res.render('posts/index', { posts });
@@ -89,17 +71,4 @@ export default () => {
   app.use((_req, _res, next) => {
     next(new NotFoundError());
   });
-
-  app.use((err, _req, res, next) => {
-    res.status(err.status);
-    switch (err.status) {
-      case 404:
-        res.render(err.status.toString());
-        break;
-      default:
-        next(new Error('Unexpected error'));
-    }
-  });
-
-  return app;
 };
