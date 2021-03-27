@@ -23,6 +23,7 @@
     "@types/jest": "^26.0.21",
     "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
+    "cheerio": "*",
     "eslint": "^7.22.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",

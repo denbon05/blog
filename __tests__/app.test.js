@@ -1,6 +1,7 @@
 // @ts-check
 
 import request from 'supertest';
+import cheerio from 'cheerio';
 
 import runServer from '../index.js';
 
@@ -13,6 +14,20 @@ describe('requests', () => {
     res = await request(runServer())
       .get('/posts/new');
     expect(res.status).toBe(200);
+  });
+
+  it('GET /undefined', async () => {
+    const res = await request(runServer()).get('/undefined');
+    expect(res.status).toBe(404);
+    const $ = cheerio.load(res.text.split('\n').join(''));
+    expect($('#title').text()).toBe('Oops, page not found');
+  });
+
+  it('GET posts/:id 404', async () => {
+    const res = await request(runServer()).get('/posts/100');
+    expect(res.status).toBe(404);
+    const $ = cheerio.load(res.text.split('\n').join(''));
+    expect($('#title').text()).toBe('Oops, page not found');
   });
 
   it('POST /posts', async () => {

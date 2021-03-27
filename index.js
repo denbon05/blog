@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 
 import Post from './entities/Post.js';
+import NotFoundError from './errors/NotFoundError.js';
 
 // const logHttp = debug('http');
 
@@ -34,11 +35,11 @@ export default () => {
     res.render('posts/new', { form: {}, errors: {} });
   });
 
-  app.get('/posts/:id', (req, res) => {
+  app.get('/posts/:id', (req, res, next) => {
     const { id } = req.params;
     const post = posts.find((p) => p.id === Number(id));
-
-    res.render('posts/show', { post });
+    if (!post) next(new NotFoundError());
+    else res.render('posts/show', { post });
   });
 
   app.post('/posts', (req, res) => {
@@ -83,6 +84,21 @@ export default () => {
     const { id } = req.params;
     posts = posts.filter((p) => p.id !== Number(id));
     res.redirect('/posts');
+  });
+
+  app.use((_req, _res, next) => {
+    next(new NotFoundError());
+  });
+
+  app.use((err, _req, res, next) => {
+    res.status(err.status);
+    switch (err.status) {
+      case 404:
+        res.render(err.status.toString());
+        break;
+      default:
+        next(new Error('Unexpected error'));
+    }
   });
 
   return app;

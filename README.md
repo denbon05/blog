@@ -11,5 +11,5 @@
 
 <pre>
 $ make install
-$ make start // started app on port 8080
+$ make start <i>// started app on port 8080</i>
 </pre>
