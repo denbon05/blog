@@ -132,4 +132,4 @@ describe('Authorization', () => {
       .send({});
     expect(res.status).toBe(422);
   });
-})
+});

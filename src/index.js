@@ -48,7 +48,7 @@ export default () => {
   app.get('/users/new', (req, res) => {
     res.render('session/new', { form: {}, errors: {}, action: '/users' });
   });
-  
+
   app.post('/users', (req, res) => {
     const { nickname, password } = req.body;
     const errors = {};
@@ -56,7 +56,7 @@ export default () => {
 
     if (!nickname) errors.nickname = "Username can't be blanck!";
     if (!password) errors.password = "Password can't be blanck!";
-    if (theSameName) errors.existName = "Username have to be unique!";
+    if (theSameName) errors.existName = 'Username have to be unique!';
     if (Object.keys(errors).length === 0) {
       // @ts-ignore
       req.session.nickname = nickname;
@@ -67,12 +67,12 @@ export default () => {
     res.status(422);
     res.render('session/new', { form: {}, errors });
   });
-  
+
   // @ts-ignore
   app.get('/session/new', (req, res) => {
     res.render('session/new', { form: {}, errors: {}, action: '/session' });
   });
-  
+
   app.post('/session', (req, res) => {
     const { nickname, password } = req.body;
     const user = users.find((u) => u.getName() === nickname);
@@ -85,12 +85,12 @@ export default () => {
     req.session.nickname = nickname;
     res.redirect('/');
   });
-  
+
   app.delete('/session', (req, res) => {
     req.session.destroy(() => {
       res.redirect('/');
     });
-  });  
+  });
 
   postsHandler(app);
 
