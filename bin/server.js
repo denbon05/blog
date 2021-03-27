@@ -3,8 +3,10 @@
 
 import app from '../src/index.js';
 
-const port = 8080;
+const port = process.env.PORT || 8080;
+const address = '0.0.0.0';
 
-app().listen(port, () => {
+// @ts-ignore
+app().listen(port, address, () => {
   console.log(`App was started on port: ${port}`);
 });
