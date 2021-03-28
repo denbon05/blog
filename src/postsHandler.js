@@ -11,17 +11,18 @@ export default (app) => {
   ];
 
   const requiredAuth = (req, res, next) => {
+    console.log('currentUser=>', res.locals.currentUser);
     if (res.locals.currentUser.isGuest()) {
       return next(new AccessDeniedError());
     }
-    next();
+    return next();
   };
 
   app.get('/posts', (req, res) => {
     res.render('posts/index', { posts });
   });
 
-  app.get('/posts/new', (req, res) => {
+  app.get('/posts/new', requiredAuth, (req, res) => {
     res.render('posts/new', { form: {}, errors: {} });
   });
 
@@ -48,7 +49,7 @@ export default (app) => {
     res.redirect(`/posts/${post.id}`);
   });
 
-  app.get('/posts/:id/edit', (req, res) => {
+  app.get('/posts/:id/edit', requiredAuth, (req, res) => {
     const post = posts.find((p) => p.id.toString() === req.params.id);
     res.render('posts/edit', { post, form: post, errors: {} });
   });

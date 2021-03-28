@@ -1,4 +1,4 @@
-//@ts-check
+// @ts-check
 
 export default class extends Error {
   constructor(...args) {

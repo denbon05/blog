@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "transform": {}
   },
   "scripts": {
     "test": "npx jest",
@@ -19,6 +20,10 @@
   ],
   "author": "Denys Bondarenko",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/denbon05/blog/issues"
+  },
+  "homepage": "https://github.com/denbon05/blog#readme",
   "devDependencies": {
     "@types/jest": "^26.0.21",
     "axios": "^0.21.1",

@@ -22,13 +22,6 @@ export default () => {
     resave: false,
     saveUninitialized: false,
   }));
-  app.use('/', (req, res, next) => {
-    console.log('Request URL:', req.originalUrl);
-    next();
-  }, (req, res, next) => {
-    console.log('Request Type:', req.method);
-    next();
-  });
 
   sessionHandler(app);
   postsHandler(app);
