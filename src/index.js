@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 // import debug from 'debug';
 import methodOverride from 'method-override';
-import NotFoundError from '../errors/NotFoundError.js';
+import flash from './flash.js';
 import postsHandler from './postsHandler.js';
 import sessionHandler from './sessionHandler.js';
 
@@ -22,13 +22,10 @@ export default () => {
     resave: false,
     saveUninitialized: false,
   }));
+  app.use(flash());
 
   sessionHandler(app);
   postsHandler(app);
-
-  app.use((_req, _res, next) => {
-    next(new NotFoundError());
-  });
 
   app.use((err, _req, res, next) => {
     res.status(err.status);

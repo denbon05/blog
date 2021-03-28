@@ -11,8 +11,9 @@ export default (app) => {
   ];
 
   const requiredAuth = (req, res, next) => {
-    console.log('currentUser=>', res.locals.currentUser);
+    // console.log('res.locals.currentUser=>', res.locals.currentUser);
     if (res.locals.currentUser.isGuest()) {
+      // console.log('req.url=>', req.url);
       return next(new AccessDeniedError());
     }
     return next();
@@ -55,12 +56,14 @@ export default (app) => {
   });
 
   app.patch('/posts/:id', requiredAuth, (req, res) => {
+    console.log('posts=>', posts);
     const { body, title } = req.body;
     const { id } = req.params;
     const post = posts.find((p) => p.id === Number(id));
     const errors = {};
     if (!title) errors.title = "title can't be blank";
     if (!body) errors.body = "body can't be blank";
+    console.log('errors=>', errors);
     if (Object.keys(errors).length > 0) {
       res.status(422);
       res.render('posts/edit', { post, form: req.body, errors });
@@ -75,5 +78,9 @@ export default (app) => {
     const { id } = req.params;
     posts = posts.filter((p) => p.id !== Number(id));
     res.redirect('/posts');
+  });
+
+  app.use((_req, _res, next) => {
+    next(new NotFoundError());
   });
 };

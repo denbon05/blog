@@ -97,6 +97,7 @@ describe('Authorization and posts manipulation', () => {
     res = await request(app)
       .get(url);
     expect(res.status).toBe(200); // ? Check if exist on right route
+    console.log('url=>', url);
     // res = await request(app)
     //   .patch(url);
     // expect(res.status).toBe(422); // ! Unproccessable entity

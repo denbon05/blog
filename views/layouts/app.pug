@@ -1,7 +1,10 @@
 doctype html
 html
   head
-    title ToDo
+    title Blog
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
     link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
   body
     nav.navbar.navbar-expand.navbar-light.bg-light
@@ -10,7 +13,7 @@ html
           li.nav-item
             a.nav-link(href="/posts/new") Write Post
           li.nav-item
-            a.nav-link(href="/posts") My Posts
+            a.nav-link(href="/posts") Posts
       if currentUser.isGuest()
         ul.navbar-nav.ml-auto
           li.nav-item
@@ -22,4 +25,7 @@ html
           button.btn.btn-link.nav-link.text-secondary(type='submit') Sign out
     .container
       .mt-1
-        block content
+        for message in flash
+          .alert(class=`alert-${message.type}`)
+            = message.message
+      block content

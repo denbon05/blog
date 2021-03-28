@@ -8,9 +8,7 @@ export default (app) => {
   const users = [new User('admin', encrypt('qwerty'))];
 
   app.use((req, res, next) => {
-    // @ts-ignore
-    if (req.session?.nickname) {
-      // @ts-ignore
+    if (req.session && req.session.nickname) {
       const { nickname } = req.session;
       res.locals.currentUser = users.find((user) => user.nickname === nickname);
     } else {
@@ -33,12 +31,12 @@ export default (app) => {
     const theSameName = users.some((u) => u.getName() === nickname);
 
     if (!nickname) errors.nickname = "Username can't be blanck!";
+    else if (theSameName) errors.nickname = 'Username already exist!';
     if (!password) errors.password = "Password can't be blanck!";
-    if (theSameName) errors.existName = 'Username already exist!';
     if (Object.keys(errors).length === 0) {
-      // @ts-ignore
       req.session.nickname = nickname;
       users.push(new User(nickname, encrypt(password)));
+      res.flash('info', `Welcome, ${nickname}!`);
       res.redirect('/');
       return;
     }
@@ -59,14 +57,14 @@ export default (app) => {
       res.render('session/new', { form: {}, errors: { err: 'Invalid nickname or password' }, action: '/session' });
       return;
     }
-    // @ts-ignore
+    res.flash('info', `Welcome, ${nickname}!`);
     req.session.nickname = nickname;
     res.redirect('/');
   });
 
   app.delete('/session', (req, res) => {
-    req.session.destroy(() => {
-      res.redirect('/');
-    });
+    delete req.session.nickname;
+    res.flash('info', `Good bye, ${res.locals.currentUser.nickname}`);
+    res.redirect('/');
   });
 };

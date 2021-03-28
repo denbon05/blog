@@ -3,7 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/5efd8f73e2106bc208c8/maintainability)](https://codeclimate.com/github/denbon05/blog/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5efd8f73e2106bc208c8/test_coverage)](https://codeclimate.com/github/denbon05/blog/test_coverage)
 
-## <a href='https://todo-stage-den.herokuapp.com/'>Follow</a>
+## <a href='https://todo-stage-den.herokuapp.com/ target="_blank"'>Follow</a>
 
 ## Description
 

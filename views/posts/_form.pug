@@ -1,18 +1,18 @@
-if Object.keys(errors).length > 0
-  .alert.alert-default
-    for key in Object.keys(errors)
-      div= errors[key]
 .row.form-group
   .col-sm
     label.col-form-label
       | Title
       sup *
     input.form-control(name='title' value=form.title)
+    if errors.title
+      .text-warning= errors.title
 .row.form-group
   .col-sm
     label.col-form-label
       | Body
       sup *
     textarea.form-control(rows=10 name='body')= form.body
+    if errors.body
+      .text-warning= errors.body
 .form-group
   button.btn.btn-primary.btn-block(type='submit') Save

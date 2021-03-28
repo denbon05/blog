@@ -4,18 +4,20 @@ block content
   .row.mt-3
     .col-sm-6.mx-auto
       form(action=action method='post')
-        if Object.keys(errors).length > 0
-          .alert.alert-default.text-danger
-            for key in Object.keys(errors)
-              p= errors[key]
+        if errors.err
+          .text-warning= errors.err
         .mb-3.form-group
           label.form-label(for='#title') Username
           input#title.form-control(name="nickname" type='text' placeholder='Type your name' value=form.nickname)
+          if errors.nickname
+            .text-warning= errors.nickname
         .mb-3.form-group
           label.form-label(for='#password') Password
           input#password.form-control(name="password" type='text' placeholder='Type your password' value=form.password)
+          if errors.password
+            .text-warning= errors.password
         .form-group
-          button.btn.btn-primary.btn-block(type='submit')
+          button.btn.btn-success.btn-block(type='submit')
             if action == '/users'
               | Sing Up
             else
