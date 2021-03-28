@@ -1,8 +1,7 @@
 install: install-deps
 
 install-deps:
-	npm install
-	npm ci
+	rm -f package-lock.json && npm install
 
 start:
 	# DEBUG=http DEBUG_COLORS=true npm start
